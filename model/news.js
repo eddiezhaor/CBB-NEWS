@@ -22,7 +22,7 @@ var newsSchema = new Schema({
         default: false
     },
     notes: {
-        type: Schema.Types.ObjectId,
+        type: Schema.Types.title,
         ref: "notes"
     }
 })
