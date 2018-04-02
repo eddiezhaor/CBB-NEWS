@@ -3,7 +3,7 @@ $(document).ready(function() {
         $(".masthead ").css('background-image', 'url(https://media.giphy.com/media/sq9kuVOfyr1HG/giphy.gif)');
     }, 3000);
     $("#scrape").click(function() {
-        window.confirm(`Wait a few seconds to load the news!`);
+        alert(`Wait a few seconds to load the news!`);
         $("#content").empty();
         $("#nothing").text("Loading....")
         $.get("/api/allNews", function(data) {
@@ -11,27 +11,7 @@ $(document).ready(function() {
             $(".masthead ").css('background-image', 'url(/image/intro-bg.jpg)');
             $("#nothing").empty();
             alert(`You have added ${data.length} news`);
-            data.forEach((element, i) => {
-                var titleDiv = $(`
-                 <div class="row">
-                     <div style="text-align:left;font-size:18px;" class="col-lg-12">
-                     <u><a id="title${i}" href="${element.link}"></a></u>
-                     </div>
-                </div>`)
-                var contentDiv = $(`   
-                    <div id="NewContent${i}"class="row">
-                        <div id="img${i}"class="col-lg-2"></div>
-                        <div style="text-align:left;font-size:15px;" id="summary${i}" class="col-lg-4"></div>
-                        <div class="col-lg-2"></div>
-                        <div style="color:black; font-size:15px;"class="col-lg-4">
-                            <button class="save" style="width:100px;"id=saveBtn${i} data-id="${element._id}">Save</button>
-                        </div>
-                    </div>`)
-                $("#content").append(titleDiv).append(contentDiv)
-                $(`#title${i}`).text(element.title);
-                $(`#summary${i}`).text(element.summary)
-                $(`#img${i}`).append(`<img class="img-responsive" width=200 height=190 src=${element.imglink}>`)
-            });
+            location.reload();
 
         })
     })
