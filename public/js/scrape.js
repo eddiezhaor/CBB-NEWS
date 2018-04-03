@@ -10,7 +10,7 @@ $(document).ready(function() {
             console.log(data)
             $(".masthead ").css('background-image', 'url(/image/intro-bg.jpg)');
             $("#nothing").empty();
-            alert(`You have added ${data.length} news`);
+            alert(`You have added ${data} news`);
             location.reload();
 
         })
