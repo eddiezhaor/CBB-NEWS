@@ -4,7 +4,8 @@ var cheerio = require("cheerio");
 var request = require("request");
 var db = require("../model");
 router.get("/allNews", function(req, res) {
-    request("https://www.theonion.com/c/news-in-brief", function(err, response, html) {
+    var randomNumber = Math.floor(Math.random() * 1000000000);
+    request("https://www.theonion.com/c/news-in-brief?startTime=1522" + randomNumber, function(err, response, html) {
         var $ = cheerio.load(html);
         var result = [];
         var count = 0;
