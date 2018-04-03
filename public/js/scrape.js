@@ -26,7 +26,7 @@ $(document).ready(function() {
             alert(`You have ${data.length} saved news`);
             data.forEach((element, i) => {
                 var titleDiv = $(`
-                 <div class="row">
+                 <div class="row" id="newTitle${i}">
                      <div style="text-align:left;font-size:18px;" class="col-lg-12">
                      <u><a id="title${i}" href="${element.link}"></a></u>
                      </div>
@@ -36,9 +36,10 @@ $(document).ready(function() {
                         <div id="img${i}"class="col-lg-2"></div>
                         <div style="text-align:left;font-size:15px;" id="summary${i}" class="col-lg-4"></div>
                         <div class="col-lg-2"></div>
-                        <div style="color:black; font-size:15px;"class="col-lg-4">
-                            <button class="checkNotes" style="width:100px;"data-toggle="modal" data-target="#myModal" id=saveNotesBtn${i} data-id="${element._id}">See Notes</button>
-                            <button class="saveNotes" style="width:100px;"data-toggle="modal" data-target="#myModal" id=saveNotesBtn${i} data-id="${element._id}">Edit Notes</button>
+                        <div style="color:black; font-size:12px;"class="col-lg-4">
+                            <button class="checkNotes" style="width:80px;"data-toggle="modal" data-target="#myModal" id=saveNotesBtn${i} data-id="${element._id}">See Notes</button>
+                            <button class="saveNotes" style="width:80px;"data-toggle="modal" data-target="#myModal" id=saveNotesBtn${i} data-id="${element._id}">Edit Notes</button>
+                            <button class="removeNotes" style="width:80px;" data-content="${i}" id=deleteNotesBtn${i} data-id="${element._id}">Remove</button>
                         </div>
                     </div>`)
                 $("#content").append(titleDiv).append(contentDiv)
@@ -73,6 +74,16 @@ $(document).ready(function() {
                 $("textarea").val(data.notes.body)
             }
 
+        })
+    })
+    $(document).on("click", ".removeNotes", function() {
+        var id = $(this).attr("data-id");
+        var contentId = $(this).attr("data-content")
+
+        console.log(id)
+        $.post("/api/remove/" + id, function(data) {
+            $(`#newTitle${contentId}`).remove()
+            $(`#NewContent${contentId}`).remove()
         })
     })
     $(document).on("click", ".checkNotes", function() {

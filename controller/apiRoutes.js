@@ -61,6 +61,15 @@ router.post("/save/:id", function(req, res) {
 
 
 })
+router.post("/remove/:id", function(req, res) {
+    db.news.findOneAndUpdate({ _id: req.params.id }, { $set: { saved: false } }, { new: true }).then(function(dbnews) {
+        res.json(dbnews)
+    }).catch(function(err) {
+        res.json(err);
+    })
+
+
+})
 
 router.post("/notes/:id", function(req, res) {
     db.notes.create(req.body).then(function(dbnotes) {
