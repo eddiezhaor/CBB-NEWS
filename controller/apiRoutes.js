@@ -34,16 +34,8 @@ router.get("/allNews", function(req, res) {
                 //     summary: summary
                 // })
         })
-
-
-
-
     })
-
-
-
 })
-
 router.get("/savedNews", function(req, res) {
     db.news.find({ saved: true }).then(function(dbnews) {
         res.json(dbnews);
@@ -67,13 +59,10 @@ router.post("/remove/:id", function(req, res) {
     }).catch(function(err) {
         res.json(err);
     })
-
-
 })
-
 router.post("/notes/:id", function(req, res) {
     db.notes.create(req.body).then(function(dbnotes) {
-        return db.news.findOneAndUpdate({ _id: req.params.id }, { $set: { notes: dbnotes._id } }, { new: true })
+        return db.news.findOneAndUpdate({ _id: req.params.id }, { $push: { notes: dbnotes._id } }, { new: true })
     }).then(function(db) {
         res.json(db)
     }).catch(function(err) {
@@ -90,4 +79,26 @@ router.get("/notes/:id",
                 res.json(err);
             })
     })
+router.get("/myNotes/:id", function(req, res) {
+    db.notes.findOne({ _id: req.params.id }).then(function(data) {
+        res.json(data)
+    }).catch(function(err) {
+        res.json(err)
+    })
+})
+router.post("/myNotes/:id", function(req, res) {
+    db.notes.findOneAndUpdate({ _id: req.params.id }, { $set: req.body }, { new: true }).then(function(data) {
+        res.json(data)
+    }).catch(function(err) {
+        res.json(err)
+    })
+})
+router.post("/removeNotes/:id", function(req, res) {
+    db.notes.remove({ _id: req.params.id }).then(function(dbnotes) {
+            res.json(dbnotes);
+        })
+        .catch(function(err) {
+            res.json(err);
+        })
+})
 module.exports = router;

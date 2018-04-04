@@ -21,10 +21,10 @@ var newsSchema = new Schema({
         type: Boolean,
         default: false
     },
-    notes: {
+    notes: [{
         type: Schema.Types.ObjectId,
         ref: "notes"
-    }
+    }]
 })
 
 var news = mongoose.model("news", newsSchema);
